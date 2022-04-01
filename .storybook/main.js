@@ -1,16 +1,28 @@
 module.exports = {
-  "stories": [
-    "../stories/**/*.stories.mdx",
-    "../stories/**/*.stories.@(js|jsx|ts|tsx)"
+  stories: [
+    "../src/**/*.stories.@(js|jsx|ts|tsx)"
   ],
-  "addons": [
+  addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
+    '@storybook/addon-controls',
     "@storybook/addon-interactions"
   ],
-  "framework": "@storybook/react",
+  framework: "@storybook/react",
   staticDirs: [{ from: '../src/assets', to: '/assets' }],
   core: {
     builder: 'webpack5',
+  },
+  typescript: {
+    check: false,
+    checkOptions: {},
+    reactDocgen: 'react-docgen-typescript',
+    reactDocgenTypescriptOptions: {
+      shouldExtractLiteralValuesFromEnum: true,
+      propFilter: (prop) => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
+    },
+  },
+  features: {
+    storyStoreV7: true,
   },
 }
