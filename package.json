@@ -16,7 +16,8 @@
     "test:coverage": "jest --coverage --colors --maxWorkers=2",
     "hygen": "hygen",
     "component:new": "hygen component with-prompt",
-    "publish": "npx semantic-release --no-ci"
+    "publish": "npx semantic-release --no-ci",
+    "prepare": "husky install"
   },
   "main": "index.js",
   "module": "index.esm.js",
@@ -94,11 +95,6 @@
   "engines": {
     "node": "<17.0.0",
     "npm": "^8.0"
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
   },
   "release": {
     "branches": [
