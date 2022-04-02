@@ -1,25 +1,19 @@
 const rules = {
   ON: 2,
   OFF: 0,
-  WARN: 1,
+  WARN: 1
 };
-
 module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['react-hooks'],
   parserOptions: {
     ecmaVersion: 2018,
     ecmaFeatures: {
-      jsx: true,
+      jsx: true
     },
-    sourceType: 'module',
+    sourceType: 'module'
   },
-  extends: [
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'prettier',
-    'eslint-config-prettier',
-  ],
+  extends: ["plugin:@typescript-eslint/recommended", "plugin:react/recommended", "prettier", "eslint-config-prettier", "plugin:storybook/recommended"],
   rules: {
     '@typescript-eslint/camelcase': rules.OFF,
     '@typescript-eslint/explicit-function-return-type': rules.OFF,
@@ -37,11 +31,11 @@ module.exports = {
     'react/prop-types': rules.OFF,
     'react-hooks/rules-of-hooks': rules.ON,
     'react-hooks/exhaustive-deps': rules.WARN,
-    'prefer-spread': rules.WARN,
+    'prefer-spread': rules.WARN
   },
   settings: {
     react: {
-      version: 'detect',
-    },
-  },
+      version: 'detect'
+    }
+  }
 };
