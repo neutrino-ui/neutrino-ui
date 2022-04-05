@@ -1,5 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
+import styled from 'styled-components'
+
+import { space, layout, color } from 'styled-system'
 
 export interface ButtonProps {
   active?: boolean | undefined;
@@ -7,6 +10,13 @@ export interface ButtonProps {
   children?: any;
   className?: string;
 }
+
+const ButtonComponent = styled.button<ButtonProps>`
+  
+  ${space}
+  ${layout}
+  ${color}
+`
 
 export const Button: React.FC<ButtonProps> = ({
   active,
@@ -23,8 +33,8 @@ export const Button: React.FC<ButtonProps> = ({
   );
 
   return (
-    <button {...rest} className={classes}>
+    <ButtonComponent bg="primary" {...rest} className={classes}>
       {children}
-    </button>
+    </ButtonComponent>
   );
 };

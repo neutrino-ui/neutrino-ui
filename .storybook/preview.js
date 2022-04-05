@@ -1,3 +1,6 @@
+import ThemeProvider from '../src/context/theme/theme-provider'
+
+
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
@@ -7,3 +10,11 @@ export const parameters = {
     },
   },
 }
+
+export const decorators = [
+  (Story) => (
+    <ThemeProvider initialTheme="dark">
+      <Story />
+    </ThemeProvider>
+  ),
+];
