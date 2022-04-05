@@ -9,7 +9,7 @@ interface ThemeProviderProps {
 
 const ThemeProvider: FC<ThemeProviderProps> = ({children, initialTheme, syncWithSystem}) => {
   const activeTheme = useColorTheme({targetColorTheme: initialTheme, syncWithSystem})
-  console.log('ThemeProvider activeTheme', activeTheme)
+  console.log('ThemeProvider activeTheme',initialTheme,  activeTheme)
   return <SCThemeProvider theme={activeTheme?.theme ?? {}}>{children}</SCThemeProvider>
 }
 

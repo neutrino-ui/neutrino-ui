@@ -1,21 +1,33 @@
 import React from 'react';
-import classnames from 'classnames';
 import styled from 'styled-components'
-
-import { space, layout, color } from 'styled-system'
+import {themeGet} from '@styled-system/theme-get'
+import { get } from '@styled-system/core'
+import css from '@styled-system/css'
+import { darken, lighten } from 'polished';
 
 export interface ButtonProps {
   active?: boolean | undefined;
   disabled?: boolean | undefined;
   children?: any;
-  className?: string;
+  className?: string
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'outline' | 'link' | 'ghost'
 }
 
 const ButtonComponent = styled.button<ButtonProps>`
+  background: ${props => themeGet(`colors.button.${props.variant}.background`)(props)};
+  border: 0;
+  color: ${props => themeGet(`colors.button.${props.variant}.color`)(props)};
+  border-radius: ${themeGet('radii.1')};
+  cursor: pointer;
+  padding: ${themeGet('space.2')} ${themeGet('space.3')};
+  transition: 0.1s ease-out background;
   
-  ${space}
-  ${layout}
-  ${color}
+  &:hover {
+    background: ${props => lighten(0.1, themeGet(`colors.button.${props.variant}.background`)(props))};
+  }
+  &:active {
+    background: ${props => darken(0.1, themeGet(`colors.button.${props.variant}.background`)(props))};
+  }
 `
 
 export const Button: React.FC<ButtonProps> = ({
@@ -23,17 +35,11 @@ export const Button: React.FC<ButtonProps> = ({
   disabled,
   className,
   children,
+  variant = 'primary',
   ...rest
 }) => {
-  const classes = classnames(
-    'Button',
-    active && `Button--active`,
-    disabled && `Button--disabled`,
-    className
-  );
-
   return (
-    <ButtonComponent bg="primary" {...rest} className={classes}>
+    <ButtonComponent {...rest} variant={variant}>
       {children}
     </ButtonComponent>
   );

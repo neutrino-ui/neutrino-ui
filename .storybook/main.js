@@ -6,7 +6,8 @@ module.exports = {
     "@storybook/addon-links",
     "@storybook/addon-essentials",
     '@storybook/addon-controls',
-    "@storybook/addon-interactions"
+    "@storybook/addon-interactions",
+    'storybook-dark-mode'
   ],
   framework: "@storybook/react",
   staticDirs: [{ from: '../src/assets', to: '/assets' }],

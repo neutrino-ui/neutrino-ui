@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import merge from 'lodash.merge'
 import get from 'lodash.get'
 import neutrinoTheme from '../primitives/themes'
@@ -13,35 +13,31 @@ type ColorTheme = {
   theme: ColorThemeOption
 }
 
-function resolveTargetColorTheme(theme?: ColorThemeOption) {
-  if (!( !theme ||
-    COLOR_SCHEMES.includes(theme) ||
-    theme === 'no-preference'
-  )) theme = DEFAULT_TARGET_COLOR_SCHEME;
-
-  return theme;
-}
-
-export const getTheme = (theme: ColorThemeOption) =>
+export const getTheme = (theme: ColorThemeOption = 'light') =>
   merge({}, neutrinoTheme, {
     colors: get(neutrinoTheme.colors.modes, theme, neutrinoTheme.colors),
   })
 
-const defaultColorTheme = { name: 'light', query: matchMedia(`(prefers-color-theme: no-preference)`), theme: getTheme('light') }
-
-function getCurrentColorTheme() {
+function getCurrentColorTheme(targetColorTheme: ColorThemeOption = 'no-preference', syncWithSystem: boolean) {
   const QUERIES = {};
 
   return (() => {
-    for (const theme of COLOR_SCHEMES) {
-      const query = QUERIES.hasOwnProperty(theme)
-        ? QUERIES[theme]
-        : (QUERIES[theme] = matchMedia(`(prefers-color-scheme: ${theme})`));
-      if (query.matches){
-       return { name: theme, query, theme: getTheme(theme) };
-      }  
+
+    if (targetColorTheme && COLOR_SCHEMES.includes(targetColorTheme) && targetColorTheme !== 'no-preference') {
+      return { name: targetColorTheme, query: matchMedia(`(prefers-color-scheme: ${targetColorTheme})`), theme: getTheme(targetColorTheme) };
     }
-    return defaultColorTheme;
+
+    if (syncWithSystem) {
+      for (const theme of COLOR_SCHEMES) {
+        const query = QUERIES.hasOwnProperty(theme)
+          ? QUERIES[theme]
+          : (QUERIES[theme] = matchMedia(`(prefers-color-scheme: ${theme})`));
+        if (query.matches){
+        return { name: theme, query, theme: getTheme(theme) };
+        }  
+      }
+    }
+    return { name: DEFAULT_TARGET_COLOR_SCHEME, query: matchMedia(`(prefers-color-scheme: no-preference)`), theme: getTheme() };
   })();
 }
 
@@ -51,15 +47,16 @@ interface UseColorThemeProps {
 }
 
 
-export default function useColorTheme({targetColorTheme, syncWithSystem}: UseColorThemeProps): ColorTheme | undefined {
+export default function useColorTheme({targetColorTheme, syncWithSystem = true}: UseColorThemeProps): ColorTheme | undefined {
   const isMounted = useRef<boolean>(false);
-  
-  const targetTheme = useMemo(
-    () => resolveTargetColorTheme(targetColorTheme),
-    [targetColorTheme]
-  );
 
-  const [theme, setTheme] = useState(getCurrentColorTheme());
+  const [theme, setTheme] = useState(getCurrentColorTheme(targetColorTheme, syncWithSystem));
+
+  useEffect(() => {
+    if(theme.name !== targetColorTheme) {
+      setTheme(getCurrentColorTheme(targetColorTheme, syncWithSystem));
+    }
+  }, [syncWithSystem, targetColorTheme, theme.name])
 
   useEffect(() => {
     const query = theme.query;
@@ -71,7 +68,7 @@ export default function useColorTheme({targetColorTheme, syncWithSystem}: UseCol
       console.log('THEME CHANGED')
       if (!evt.matches) {
         query?.removeEventListener('change', themeChangeHandler);
-        isMounted.current && setTheme(getCurrentColorTheme());
+        isMounted.current && setTheme(getCurrentColorTheme(targetColorTheme, syncWithSystem));
         query?.addEventListener('change', themeChangeHandler);
       }
     }
@@ -81,7 +78,7 @@ export default function useColorTheme({targetColorTheme, syncWithSystem}: UseCol
       query?.removeEventListener('change', themeChangeHandler);
       isMounted.current = false;
     };
-  }, [theme]);
+  }, [syncWithSystem, targetColorTheme, theme]);
 
   return theme
 }
