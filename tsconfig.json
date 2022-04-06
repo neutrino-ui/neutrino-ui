@@ -9,6 +9,8 @@
       "dom",
       "es5"
     ],
+    "rootDir": "./",
+    "baseUrl": "./src",
     "module": "esNext",
     "moduleResolution": "node",
     "noImplicitAny": false,

@@ -1,39 +1,12 @@
-import { Button } from '..';
-import { render } from '@testing-library/react';
+import { Button } from '..'
+import render from 'utils/test-renderer'
+import 'utils/jest'
 
 describe('Button Component', () => {
   it('Button renders', () => {
-    const { container } = render(<Button />);
+    const { container } = render(<Button>Test</Button>)
 
-    const node = container.querySelector('button.Button');
-    expect(node!.className).toEqual('Button');
-  });
-
-  it('Button active renders', () => {
-    const { container } = render(<Button active />);
-
-    const node = container.querySelector('button.Button');
-    expect(node!.className).toEqual('Button Button--active');
-  });
-
-  it('Button disabled renders', () => {
-    const { container } = render(<Button disabled />);
-
-    const node = container.querySelector('button.Button');
-    expect(node!.className).toEqual('Button Button--disabled');
-  });
-
-  it('Button children renders', () => {
-    const { container } = render(<Button>foo</Button>);
-
-    const node = container.querySelector('button.Button');
-    expect(node!.innerHTML).toEqual('foo');
-  });
-
-  it('Button extra classNames render', () => {
-    const { container } = render(<Button className='foo' />);
-
-    const node = container.querySelector('button.Button');
-    expect(node!.className).toEqual('Button foo');
-  });
-});
+    const node = container.querySelector('button')
+    expect(node?.textContent).toBe('Test')
+  })
+})
