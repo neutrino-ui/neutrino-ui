@@ -1,5 +1,5 @@
 import React from 'react'
-import {useForceUpdate} from '../hooks/use-force-update'
+import { useForceUpdate } from '../hooks/use-force-update'
 
 /** createSlots is a factory that can create a
  *  typesafe Slots + Slot pair to use in a component definition
@@ -19,7 +19,7 @@ const createSlots = <SlotNames extends string>(slotNames: SlotNames[]) => {
   const SlotsContext = React.createContext<ContextProps>({
     registerSlot: () => null,
     unregisterSlot: () => null,
-    context: {}
+    context: {},
   })
 
   /** Slots uses a Double render strategy inspired by [reach-ui/descendants](https://github.com/reach/reach-ui/tree/develop/packages/descendants)
@@ -30,10 +30,10 @@ const createSlots = <SlotNames extends string>(slotNames: SlotNames[]) => {
   const Slots: React.FC<{
     context?: ContextProps['context']
     children: (slots: Slots) => React.ReactNode
-  }> = ({context = {}, children}) => {
+  }> = ({ context = {}, children }) => {
     // initialise slots
     const slotsDefinition: Slots = {}
-    slotNames.map(name => (slotsDefinition[name] = null))
+    slotNames.map((name) => (slotsDefinition[name] = null))
     const slotsRef = React.useRef<Slots>(slotsDefinition)
 
     const rerenderWithSlots = useForceUpdate()
@@ -72,15 +72,17 @@ const createSlots = <SlotNames extends string>(slotNames: SlotNames[]) => {
     const slots = slotsRef.current
 
     return (
-      <SlotsContext.Provider value={{registerSlot, unregisterSlot, context}}>{children(slots)}</SlotsContext.Provider>
+      <SlotsContext.Provider value={{ registerSlot, unregisterSlot, context }}>
+        {children(slots)}
+      </SlotsContext.Provider>
     )
   }
 
   const Slot: React.FC<{
     name: SlotNames
     children: React.ReactNode
-  }> = ({name, children}) => {
-    const {registerSlot, unregisterSlot, context} = React.useContext(SlotsContext)
+  }> = ({ name, children }) => {
+    const { registerSlot, unregisterSlot, context } = React.useContext(SlotsContext)
 
     React.useEffect(() => {
       registerSlot(name, typeof children === 'function' ? children(context) : children)
@@ -90,7 +92,7 @@ const createSlots = <SlotNames extends string>(slotNames: SlotNames[]) => {
     return null
   }
 
-  return {Slots, Slot}
+  return { Slots, Slot }
 }
 
 export default createSlots

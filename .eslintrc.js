@@ -29,7 +29,6 @@ module.exports = {
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:prettier/recommended',
-    'plugin:primer-react/recommended',
     'plugin:jsx-a11y/recommended',
     'plugin:github/recommended',
     'plugin:github/typescript',
