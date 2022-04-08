@@ -1,5 +1,4 @@
-import { lightColors, darkColors } from './colors/primitives'
-import { buttonDarkStyles, buttonLightStyles } from './colors/button'
+import { buttonDarkStyles, buttonLightStyles, lightColors, darkColors } from './colors'
 import { fontStack } from './utils'
 const neutrinoTheme = {
   fonts: {
