@@ -9,6 +9,7 @@ export const Default: ComponentStory<typeof Button> = (args) => (
       <FontAwesomeIcon icon={faCoffee} />
     </Button.LeadingVisual>
     Button
+    <Button.Description>This is a test</Button.Description>
     <Button.TrailingVisual>
       <FontAwesomeIcon icon={faSmileBeam} />
     </Button.TrailingVisual>
@@ -18,5 +19,24 @@ export const Default: ComponentStory<typeof Button> = (args) => (
 export default {
   title: 'Button',
   component: Button,
-  argTypes: {},
+  argTypes: {
+    disabled: { control: 'boolean', defaultValue: false },
+    variant: {
+      control: {
+        type: 'select',
+        options: [
+          'primary',
+          'secondary',
+          'success',
+          'warning',
+          'danger',
+          'info',
+          'outline',
+          'link',
+          'ghost',
+        ],
+      },
+      defaultValue: 'primary',
+    },
+  },
 }

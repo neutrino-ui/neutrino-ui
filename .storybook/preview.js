@@ -1,6 +1,7 @@
 import ThemeProvider from '../src/context/theme/theme-provider'
 import { themes } from '@storybook/theming';
 import { useDarkMode } from 'storybook-dark-mode';
+import { gray, grayDark } from '@radix-ui/colors';
 
 const storybookConfiguration = {
   brandTitle: 'Neutrino UI',
@@ -24,6 +25,8 @@ export const parameters = {
       barSelectedColor: '#8056C5',
       colorSecondary: '#8056C5',
       barTextColor: '#d0d8dd',
+      appContentBg: grayDark.gray1,
+      appBg: grayDark.gray2,
     },
     // Override the default light theme
     light: { 
@@ -31,7 +34,9 @@ export const parameters = {
       ...storybookConfiguration, 
       base: "light", 
       barSelectedColor: '#5C359A',
-      colorSecondary: '#5C359A'
+      colorSecondary: '#5C359A',
+      appContentBg: gray.gray1,
+      appBg: gray.gray2,
     }
   }
 }

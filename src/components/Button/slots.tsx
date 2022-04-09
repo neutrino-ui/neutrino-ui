@@ -5,6 +5,30 @@ import { Slot, ButtonContext, TEXT_ROW_HEIGHT } from './Button'
 
 type VisualProps = SxProp & React.HTMLAttributes<HTMLSpanElement>
 
+export type ButtonDescriptionVisualProps = VisualProps
+export const Description: React.FC<ButtonDescriptionVisualProps> = ({ sx = {}, ...props }) => {
+  return (
+    <Slot name='Description'>
+      {({ variant, disabled }: ButtonContext) => (
+        <Box
+          as='span'
+          sx={merge(
+            {
+              maxHeight: TEXT_ROW_HEIGHT,
+              fontSize: 0,
+              marginLeft: 2,
+            },
+            sx as SxProp
+          )}
+          {...props}
+        >
+          {props.children}
+        </Box>
+      )}
+    </Slot>
+  )
+}
+
 export const LeadingVisualContainer: React.FC<VisualProps> = ({ sx = {}, ...props }) => {
   return (
     <Box

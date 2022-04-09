@@ -45,6 +45,7 @@
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
+    "@radix-ui/colors": "^0.1.8",
     "@react-aria/ssr": "3.1.2",
     "@styled-system/css": "5.1.5",
     "@styled-system/props": "5.1.5",
@@ -54,7 +55,8 @@
     "lodash.merge": "^4.6.2",
     "polished": "^4.2.2",
     "styled-components": "^5.3.5",
-    "styled-system": "^5.1.5"
+    "styled-system": "^5.1.5",
+    "use-sound": "^4.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.17.9",
