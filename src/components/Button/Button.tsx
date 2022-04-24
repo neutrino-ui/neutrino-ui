@@ -4,6 +4,7 @@ import { themeGet } from '@styled-system/theme-get'
 import createSlots from 'utils/create-slots'
 import useSound from 'use-sound'
 import Box from 'components/Box/Box'
+import './styles/button.module.scss'
 
 type ButtonVariantState = {
   bg: string
@@ -159,14 +160,14 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <Slots context={{ variant, disabled }}>
       {(slots) => (
-        <ButtonComponent {...rest} variant={variant} disabled={disabled}>
+        <button>
           {slots.LeadingVisual}
           <Box sx={{ display: 'flex', flexDirection: 'column', fontSize: 2 }}>
             {children}
             {slots.Description}
           </Box>
           {slots.TrailingVisual}
-        </ButtonComponent>
+        </button>
       )}
     </Slots>
   )

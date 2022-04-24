@@ -1,7 +1,7 @@
-import ThemeProvider from '../src/context/theme/theme-provider'
 import { themes } from '@storybook/theming';
 import { useDarkMode } from 'storybook-dark-mode';
 import { gray, grayDark } from '@radix-ui/colors';
+import '../src/primitives/themes/neutrino-ui.theme.scss';
 
 const storybookConfiguration = {
   brandTitle: 'Neutrino UI',
@@ -17,6 +17,7 @@ export const parameters = {
     },
   },
   darkMode: {
+
     // Override the default dark theme
     dark: { 
       ...themes.dark, 
@@ -42,9 +43,8 @@ export const parameters = {
 }
 
 export const decorators = [
-  (Story) => (
-    <ThemeProvider initialTheme={useDarkMode() ? 'dark' : 'light'}>
-      <Story />
-    </ThemeProvider>
-  ),
+  (Story) => {
+    document.body.setAttribute('data-theme', useDarkMode() ? 'dark' : 'light');
+    return <Story />
+  },
 ];
