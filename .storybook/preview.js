@@ -44,7 +44,7 @@ export const parameters = {
 
 export const decorators = [
   (Story) => {
-    document.body.setAttribute('data-theme', useDarkMode() ? 'dark' : 'light');
+    document.querySelector(':root').setAttribute('data-theme', useDarkMode() ? 'dark' : 'light');
     return <Story />
   },
 ];

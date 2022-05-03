@@ -1,4 +1,4 @@
-import React from 'react'
+import { forwardRef } from 'react'
 import styled from 'styled-components'
 import { themeGet } from '@styled-system/theme-get'
 import createSlots from 'utils/create-slots'
@@ -93,6 +93,7 @@ export const getVariantStyles = (
   return themeGet(variantStyles?.[resolvedState]?.[key] ?? '', fallback)(props)
 }
 export interface ButtonProps {
+  children: React.ReactNode
   disabled?: boolean
   id?: string
   variant?:
@@ -148,27 +149,24 @@ export { Slot }
 export type ButtonContext = Pick<ButtonProps, 'variant' | 'disabled'>
 export const TEXT_ROW_HEIGHT = '20px'
 
-export const Button: React.FC<ButtonProps> = ({
-  children,
-  disabled = false,
-  id,
-  variant = 'primary',
-  ...rest
-}) => {
-  const [play] = useSound('../../assets/sounds/click.wav', { volume: 0.5 })
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ children, disabled = false, id, variant = 'primary', ...rest }, ref) => {
+    const [play] = useSound('../../assets/sounds/click.wav', { volume: 0.5 })
 
-  return (
-    <Slots context={{ variant, disabled }}>
-      {(slots) => (
-        <button>
-          {slots.LeadingVisual}
-          <Box sx={{ display: 'flex', flexDirection: 'column', fontSize: 2 }}>
-            {children}
-            {slots.Description}
-          </Box>
-          {slots.TrailingVisual}
-        </button>
-      )}
-    </Slots>
-  )
-}
+    return (
+      <Slots context={{ variant, disabled }}>
+        {(slots) => (
+          <button disabled={disabled}>
+            {slots.LeadingVisual}
+            <Box sx={{ display: 'flex', flexDirection: 'column', fontSize: 2 }}>
+              {children}
+              {slots.Description}
+            </Box>
+            {slots.TrailingVisual}
+          </button>
+        )}
+      </Slots>
+    )
+  }
+)
+Button.displayName = 'Button'
